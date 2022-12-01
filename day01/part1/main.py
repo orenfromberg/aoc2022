@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 
+sum = 0
 max = 0
-cur_max = 0
-
-with open('data.txt') as f:
+with open('./day01/part1/data.txt') as f:
     for line in f:
-        if (line != "\n"):
-            cur_max += int(line)
-            max = cur_max if cur_max > max else max
-        else:
-            cur_max = 0
-            continue
-
+        sum = sum + int(line) if line != "\n" else 0
+        max = sum if sum > max else max
 print(max)
