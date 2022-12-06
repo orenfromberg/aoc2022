@@ -20,7 +20,6 @@ with open('./day05/data.txt') as f:
         temp = []
         for i in range(num):
             foo = stacks[s_from].pop()
-            # stacks[s_to].append(foo)
             temp.append(foo)
         for i in range(len(temp)):
             stacks[s_to].append(temp.pop())
