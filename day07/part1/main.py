@@ -1,4 +1,3 @@
-# dirs = {'/': {'a': {'e': {'i': 584}, 'f': 29116, 'g': 2557, 'h.lst': 62596}, 'b.txt': 14848514, 'c.dat': 8504156, 'd': {'j': 4060174, 'd.log': 8033020, 'd.ext': 5626152, 'k': 7214296}}}
 fs = {}
 stack = []
 def process_command(line, stack):
@@ -11,14 +10,15 @@ def process_command(line, stack):
         else:
             stack.append(tokens[2])
 
-def compute_size(fs, stack):
+def compute_size(fs, sizes):
     total = 0
     for i in fs:
         if(isinstance(fs[i], int)):
             total += fs[i]
         elif(isinstance(fs[i], dict)):
-            total += compute_size(fs, stack)
-    print(total)
+            total += compute_size(fs[i], sizes)
+    if(total < 100000):
+        sizes.append(total)
     return total
 
 with open('./day07/data.txt') as f:
@@ -38,4 +38,6 @@ with open('./day07/data.txt') as f:
             foo[tokens[1]] = int(tokens[0])
 
     # recurse through the dictionary and compute dir sizes
-    compute_size(fs, stack)
+    sizes = []
+    compute_size(fs, sizes)
+    print(sum(sizes))
