@@ -1,12 +1,21 @@
 
 def get_viewing_distance(val, heights):
-    max = val
+    max = 0
+    num_trees = 0
+    for i in heights:
+        if(val <= i):
+            num_trees += 1
+            break
+        if(val > i and i >= max):
+            max = i
+            num_trees += 1
+    return num_trees
 
+scores = []
 grid = []
-num_visible = 0
-with open('./day08/testdata.txt') as f:
+with open('./day08/data.txt') as f:
     for line in f:
-        grid.append([x for x in line.strip()])
+        grid.append([int(x) for x in line.strip()])
     dim = len(grid)
     for i in range(dim): #row
         for j in range(dim): #col
@@ -22,8 +31,11 @@ with open('./day08/testdata.txt') as f:
             top = col[-dim+i-1:-dim-1:-1]
             bottom = col[i+1:]
             # compute viewing distances here
-            
-            # [get_viewing_distance(val, x) for x in [left, right, top, bottom]]
-            # if (max(left) < val or max(right) < val or max(top) < val or max(bottom) < val):
-            #     num_visible += 1
-print(num_visible)
+            l_d = get_viewing_distance(val, left)
+            r_d = get_viewing_distance(val, right)
+            t_d = get_viewing_distance(val, top)
+            b_d = get_viewing_distance(val, bottom)
+            score = l_d * r_d * t_d * b_d
+            scores.append(score)
+# print(max(scores))
+print(scores)
