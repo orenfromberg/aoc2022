@@ -22,7 +22,6 @@ def cycle(instruction):
 
     values.append(x)
 
-
 x = 1
 instruction = []
 values = [1]
