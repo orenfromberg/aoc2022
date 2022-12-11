@@ -92,6 +92,12 @@ monkeys = [
 
 counts = [0 for x in range(len(monkeys))]
 rounds = 0
+
+tests = [monkey["test"] for monkey in monkeys]
+factor = 1
+for t in tests:
+    factor *= t
+
 # for monkey in monkeys:
 while(rounds != 10000):
     for i in range(len(monkeys)):
@@ -106,12 +112,12 @@ while(rounds != 10000):
             elif(monkey["op"][0] == 'pow'):
                 item *= item
             # item //= 3
+            item = item % factor
             if (item % monkey["test"] == 0):
                 monkeys[monkey["if_true"]]["items"].append(item)
             else:
                 monkeys[monkey["if_false"]]["items"].append(item)
             counts[i] += 1
     rounds += 1
-    print(rounds)
 counts.sort()
 print(counts.pop() * counts.pop())
