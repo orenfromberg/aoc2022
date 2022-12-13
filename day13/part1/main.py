@@ -1,7 +1,6 @@
 # -1 = not in the right order
 # 0 = equal
 # 1 = in the right order
-
 def compare(left, right) -> bool:
     if isinstance(left, int) and isinstance(right, int):
         if left == right:
