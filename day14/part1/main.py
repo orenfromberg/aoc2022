@@ -1,5 +1,5 @@
 rocks = set()
-with open('./day14/testdata.txt') as f:
+with open('./day14/data.txt') as f:
     for _line in f:
         paths = [(int(y[0]),int(y[1])) for y in [x.split(',') for x in _line.strip().split(' -> ')]]
         for i in range(len(paths)-1):
@@ -11,4 +11,36 @@ with open('./day14/testdata.txt') as f:
                 for y in range(y0,y1+stepy,stepy):
                     rocks.add((x,y))
 
-print(len(rocks))
+#calculate abyss, highest y value in rocks
+abyss = 0
+for rock in rocks:
+    if(rock[1] > abyss):
+        abyss = rock[1]
+
+def new_sand():
+    sandx, sandy = (500,0)
+
+    while True:
+        # look directly below
+        if (sandx, sandy+1) not in rocks:
+            sandy += 1
+            if sandy > abyss:
+                return False
+            continue
+        if(sandx-1, sandy+1) not in rocks:
+            sandx -=1
+            sandy +=1
+            continue
+        if(sandx+1, sandy+1) not in rocks:
+            sandx += 1
+            sandy += 1
+            continue
+        # it came to rest
+        rocks.add((sandx,sandy))
+        return True
+
+count = 0
+while new_sand():
+    count += 1
+
+print(count)
