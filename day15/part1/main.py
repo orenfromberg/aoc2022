@@ -8,13 +8,6 @@ def distance(a: tuple, b: tuple) -> int:
 
 data=[]
 
-with open('./day15/data.txt') as f:
-    for line in f:
-        result = re.search(r"^Sensor at x=(.*), y=(.*): closest beacon is at x=(.*), y=(.*)$", line.strip())
-        a = (int(result.group(1)),int(result.group(2)))
-        b = (int(result.group(3)),int(result.group(4)))
-        data.append([a,b,distance(a,b)])
-
 # tests if (x,y) is not a beacon within range of this sensor
 def cant_be_beacon(x,y,data) -> bool:
     sensor = data[0]
@@ -42,8 +35,8 @@ def check_line(y, data):
     max_d = max([row[2] for row in _data])
 
 
-    _from = min_x-max_d #-1605551
-    _to = max_x+max_d+1 #5599294
+    _from = min_x-max_d
+    _to = max_x+max_d+1
     for x in range(min_x-max_d, max_x+max_d+1,1):
         result = False
         for i in [cant_be_beacon(x,y,row) for row in _data]:
@@ -52,8 +45,14 @@ def check_line(y, data):
             count+=1
             continue
     return count
+
+# filename = './day15/data.txt'; arg = 2000000
+filename = './day15/testdata.txt'; arg = 10
+with open(filename) as f:
+    for line in f:
+        result = re.search(r"^Sensor at x=(.*), y=(.*): closest beacon is at x=(.*), y=(.*)$", line.strip())
+        a = (int(result.group(1)),int(result.group(2)))
+        b = (int(result.group(3)),int(result.group(4)))
+        data.append([a,b,distance(a,b)])
     
-# y = 2000000
-# y=10
-# print(check_line(10,data))
-print(check_line(2000000,data))
+print(check_line(arg,data))
